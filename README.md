@@ -33,3 +33,6 @@ Step 17700 Dec 212.61709 Fut 345.45132
 Step 17800 Dec nan Fut nan
 Step 17900 Dec nan Fut nan
 ```
+The files created at Step 17000, just before the `nan`, are
+[mnist/models/lstm_autoencoder_20150911163609.h5](https://s3.amazonaws.com/udivideo/lstm_autoencoder_20150911163609.h5) and
+[mnist/models/lstm_autoencoder_20150911163609.pbtxt](https://s3.amazonaws.com/udivideo/lstm_autoencoder_20150911163609.pbtxt)
