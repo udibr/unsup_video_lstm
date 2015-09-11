@@ -1,0 +1,8 @@
+dataset_type: BOUNCING_MNIST
+data_file : "/ais/gobi3/u/nitish/mnist/mnist.h5"
+dataset_name: "train_full"
+num_frames: 20
+batch_size: 128
+image_size: 64
+num_digits: 2
+step_length: 0.1

@@ -1,0 +1,137 @@
+name: "lstm_autoencoder"
+lstm {
+  name: "lstm_1_enc"
+  num_hid: 4096
+  w_dense {
+    init_type: UNIFORM
+    scale: 0.01
+    epsilon: 0.0001
+    momentum: 0.9
+    l2_decay: 0.0001
+    gradient_clip: 0.0001
+    eps_decay_factor: 0.9
+    eps_decay_after: 10000
+    rms_prop: true
+  }
+  w_diag {
+    init_type: UNIFORM
+    scale: 0.1
+    epsilon: 0.0001
+    momentum: 0.9
+    l2_decay: 0.0001
+    gradient_clip: 0.0001
+    eps_decay_factor: 0.9
+    eps_decay_after: 10000
+    rms_prop: true
+  }
+  b {
+    init_type: LSTM_BIAS
+    epsilon: 0.0001
+    momentum: 0.9
+    gradient_clip: 0.0001
+    eps_decay_factor: 0.9
+    eps_decay_after: 10000
+    input_gate_bias: 0.0
+    forget_gate_bias: 5.0
+    input_bias: 0.0
+    output_gate_bias: 0.0
+    rms_prop: true
+  }
+  w_input {
+    init_type: UNIFORM
+    scale: 0.01
+    epsilon: 0.0001
+    momentum: 0.9
+    l2_decay: 0.0001
+    gradient_clip: 0.0001
+    eps_decay_factor: 0.9
+    eps_decay_after: 10000
+    rms_prop: true
+  }
+  has_input: true
+  input_dims: 4096
+}
+checkpoint_dir: "/ais/gobi3/u/nitish/mnist/models"
+max_iters: 10000000
+print_after: 100
+validate_after: 10000
+save_after: 1000
+display_after: 0
+dec_seq_length: 0
+binary_data: true
+future_seq_length: 10
+future_conditional : true
+lstm_future {
+  name: "lstm_1_fut"
+  num_hid: 4096
+  w_dense {
+    init_type: UNIFORM
+    scale: 0.01
+    epsilon: 0.0001
+    momentum: 0.9
+    l2_decay: 0.0001
+    gradient_clip: 0.0001
+    eps_decay_factor: 0.9
+    eps_decay_after: 10000
+    rms_prop: true
+  }
+  w_diag {
+    init_type: UNIFORM
+    scale: 0.1
+    epsilon: 0.0001
+    momentum: 0.9
+    l2_decay: 0.0001
+    gradient_clip: 0.0001
+    eps_decay_factor: 0.9
+    eps_decay_after: 10000
+    rms_prop: true
+  }
+  b {
+    init_type: LSTM_BIAS
+    epsilon: 0.0001
+    momentum: 0.9
+    gradient_clip: 0.0001
+    eps_decay_factor: 0.9
+    eps_decay_after: 10000
+    input_gate_bias: 0.0
+    forget_gate_bias: 5.0
+    input_bias: 0.0
+    output_gate_bias: 0.0
+    rms_prop: true
+  }
+  w_output {
+    init_type: UNIFORM
+    scale: 0.01
+    epsilon: 0.0001
+    momentum: 0.9
+    l2_decay: 0.0001
+    gradient_clip: 0.0001
+    eps_decay_factor: 0.9
+    eps_decay_after: 10000
+    rms_prop: true
+  }
+  b_output {
+    init_type: CONSTANT
+    scale: 0.0
+    epsilon: 0.0001
+    momentum: 0.9
+    gradient_clip: 0.0001
+    eps_decay_factor: 0.9
+    eps_decay_after: 10000
+  }
+  w_input {
+    init_type: UNIFORM
+    scale: 0.01
+    epsilon: 0.0001
+    momentum: 0.9
+    l2_decay: 0.0001
+    gradient_clip: 0.0001
+    eps_decay_factor: 0.9
+    eps_decay_after: 10000
+    rms_prop: true
+  }
+  has_input: true
+  input_dims: 4096
+  has_output: true
+  output_dims: 4096
+}
