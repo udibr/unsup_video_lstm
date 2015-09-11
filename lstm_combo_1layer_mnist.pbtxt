@@ -1,5 +1,5 @@
 name: "lstm_autoencoder"
-checkpoint_dir: "/ais/gobi3/u/nitish/mnist/models"
+checkpoint_dir: "mnist/models"
 print_after: 100
 display_after: 0
 validate_after: 1000
