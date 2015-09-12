@@ -42,3 +42,9 @@ Step 17900 Dec nan Fut nan
 The files created at Step 17000, just before the `nan`, are
 [mnist/models/lstm_autoencoder_20150911163609.h5](https://s3.amazonaws.com/udivideo/lstm_autoencoder_20150911163609.h5) and
 [mnist/models/lstm_autoencoder_20150911163609.pbtxt](https://s3.amazonaws.com/udivideo/lstm_autoencoder_20150911163609.pbtxt)
+
+You can continue a terminated run by supplying the `pbtxt` file it created instead of initial `pbtxt` file.
+For example:
+```bash
+python lstm_composite.py mnist/models/lstm_autoencoder_20150911163609.pbtxt bouncing_mnist.pbtxt
+```
