@@ -19,6 +19,12 @@ RUN
 ```bash
 python lstm_composite.py lstm_combo_1layer_mnist.pbtxt bouncing_mnist.pbtxt
 ```
+if you receive an exception such as 
+```
+cudamat.CUDAMatException: CUBLAS error.
+```
+then your GPU does not have enough memory and you should switch to a different board
+(e.g. Mac internal GPU vs. [GTX980](http://udibr.github.io/using-external-gtx-980-with-macbook-pro.html))
 
 but eventually I got `nan` on the scores while running
 ```
