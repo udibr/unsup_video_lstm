@@ -343,7 +343,7 @@ class BouncingMNISTDataHandler(object):
       print output_file2
       plt.savefig(output_file2, bbox_inches='tight')
     else:
-      plt.pause(0.1)
+      plt.pause(60)
 
 def Test():
   #load data from disk to cpu

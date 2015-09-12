@@ -69,3 +69,8 @@ python lstm_composite.py mnist/models/lstm_autoencoder_20150911163609.pbtxt boun
 you will then see two frames animating images.
 The first one will show an original sequence of images and the second will show you 
 a a sequence made from decoded images, from the autoencoder, followed by predicted future images.
+
+![original](images/figure_1.png "original sequence")
+
+![decoded/predicted](images/figure_2.png "decoded and predicted sequence")
+
