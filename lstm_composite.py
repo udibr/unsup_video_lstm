@@ -295,29 +295,31 @@ class LSTMComp(object):
     if dataset_size % batch_size > 0:
       num_batches += 1
     end = False
+    image_size = int(np.sqrt(self.num_dims_))  # 64
+    if output_dir is None:
+      output_dir = self.model_.checkpoint_dir
     for ii in xrange(num_batches):
       v_cpu, _ = data.GetBatch()
       self.v_.overwrite(v_cpu, transpose=True)
       self.Fprop()
-      v_cpu = v_cpu.T.reshape(64, 64, -1, batch_size)
-      rec = self.v_dec_.asarray().reshape(64, 64, -1, batch_size)
-      fut = self.v_fut_.asarray().reshape(64, 64, -1, batch_size)
+      v_cpu = v_cpu.T.reshape(image_size, image_size, -1, batch_size)
+      rec = self.v_dec_.asarray().reshape(image_size, image_size, -1, batch_size)
+      fut = self.v_fut_.asarray().reshape(image_size, image_size, -1, batch_size)
       for j in xrange(batch_size):
         ind = j + ii * batch_size
         if ind >= dataset_size:
           end = True
           break
-        if output_dir is None:
-          output_file = None
-        else:
-          #output_file = os.path.join(output_dir, "%.6d.pdf" % ind)
-          output_file = os.path.join(output_dir, "%.6d.npz" % ind)
-        #data.DisplayData(v_cpu, rec=rec, fut=fut, case_id=j, output_file=output_file)
-        print output_file
-        np.savez(output_file,
-                 original=v_cpu[:, :, :, j],
-                 rec=rec[:, :, :, j],
-                 fut=fut[:, :, :, j])
+        output_file = None
+        # if output_dir is not None:
+        #   # output_file = os.path.join(output_dir, "%.6d.pdf" % ind)
+        #   output_file = os.path.join(output_dir, "%.6d.npz" % ind)
+        #   print output_file
+        data.DisplayData(v_cpu.T, rec=rec.T, fut=fut.T, case_id=j, output_file=output_file)
+        # np.savez(output_file,
+        #          original=v_cpu[:, :, :, j],
+        #          rec=rec[:, :, :, j],
+        #          fut=fut[:, :, :, j])
       if end:
         break
 
@@ -450,6 +452,9 @@ def main():
   lstm_autoencoder = LSTMComp(model)
   train_data = ChooseDataHandler(ReadDataProto(sys.argv[2]))
   if len(sys.argv) > 3:
+    if sys.argv[3] == "runandshow":
+      max_dataset_size = int(sys.argv[4]) if len(sys.argv) > 4 else None
+      return lstm_autoencoder.RunAndShow(train_data, max_dataset_size=max_dataset_size)
     valid_data = ChooseDataHandler(ReadDataProto(sys.argv[3]))
   else:
     valid_data = None

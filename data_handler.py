@@ -2,7 +2,8 @@ import numpy as np
 import config_pb2
 from google.protobuf import text_format
 import h5py
-import sys
+import sys, os
+from matplotlib import pylab as plt
 
 def ReadDataProto(fname):
   data_pb = config_pb2.Data()
@@ -300,9 +301,11 @@ class BouncingMNISTDataHandler(object):
     return data.reshape(self.seq_length_ * self.batch_size_, -1), None
 
   def DisplayData(self, data, rec=None, fut=None, fig=1, case_id=0, output_file=None):
-    name, ext = os.path.splitext(output_file)
-    output_file1 = '%s_original%s' % (name, ext)
-    output_file2 = '%s_recon%s' % (name, ext)
+    output_file1 = output_file2 = None
+    if output_file is not None:
+      name, ext = os.path.splitext(output_file)
+      output_file1 = '%s_original%s' % (name, ext)
+      output_file2 = '%s_recon%s' % (name, ext)
     data = data[case_id, :].reshape(-1, self.image_size_, self.image_size_)
     if rec is not None:
       rec = rec[case_id, :].reshape(-1, self.image_size_, self.image_size_)
@@ -314,7 +317,7 @@ class BouncingMNISTDataHandler(object):
       else:
         assert enc_seq_length == self.seq_length_ - fut.shape[0]
     num_rows = 1
-    plt.figure(2*fig, figsize=(20, 1))
+    plt.figure(2*fig-1, figsize=(20, 1))
     plt.clf()
     for i in xrange(self.seq_length_):
       plt.subplot(num_rows, self.seq_length_, i+1)
@@ -325,7 +328,7 @@ class BouncingMNISTDataHandler(object):
       print output_file1
       plt.savefig(output_file1, bbox_inches='tight')
 
-    plt.figure(2*fig+1, figsize=(20, 1))
+    plt.figure(2*fig, figsize=(20, 1))
     plt.clf()
     for i in xrange(self.seq_length_):
       if rec is not None and i < enc_seq_length:

@@ -16,17 +16,12 @@ cd ..
 
 RUN
 ===
+Training
+--------
 ```bash
 python lstm_composite.py lstm_combo_1layer_mnist.pbtxt bouncing_mnist.pbtxt
 ```
-if you receive an exception such as 
-```
-cudamat.CUDAMatException: CUBLAS error.
-```
-then your GPU does not have enough memory and you should switch to a different board
-(e.g. Mac internal GPU vs. [GTX980](http://udibr.github.io/using-external-gtx-980-with-macbook-pro.html))
-
-but eventually I got `nan` on the scores while running
+eventually I got `nan` on the scores while running
 ```
 Step 17000 Dec 213.17694 Fut 345.98576 Writing model to mnist/models/lstm_autoencoder_20150911163609.h5
 Step 17100 Dec 213.55469 Fut 347.48344
@@ -43,8 +38,34 @@ The files created at Step 17000, just before the `nan`, are
 [mnist/models/lstm_autoencoder_20150911163609.h5](https://s3.amazonaws.com/udivideo/lstm_autoencoder_20150911163609.h5) and
 [mnist/models/lstm_autoencoder_20150911163609.pbtxt](https://s3.amazonaws.com/udivideo/lstm_autoencoder_20150911163609.pbtxt)
 
-You can continue a terminated run by supplying the `pbtxt` file it created instead of initial `pbtxt` file.
+
+if you receive an exception such as 
+```
+cudamat.CUDAMatException: CUBLAS error.
+```
+then your GPU does not have enough memory and you should switch to a different board
+(e.g. Mac internal GPU vs. [GTX980](http://udibr.github.io/using-external-gtx-980-with-macbook-pro.html))
+or run a smaller model:
+```bash
+python lstm_composite.py lstm_combo_1layer_mnist_512.pbtxt bouncing_mnist.pbtxt
+```
+
+Continue Training
+-----------------
+continue a terminated train run by supplying the `pbtxt` file it created instead of initial `pbtxt` file.
 For example:
 ```bash
 python lstm_composite.py mnist/models/lstm_autoencoder_20150911163609.pbtxt bouncing_mnist.pbtxt
 ```
+
+Running a trained model
+-----------------------
+Use the `pbtxt`, created in training, and add `runandshow` at the end.
+You can optionally add the maximal number of examples you want to show.
+For example:
+```bash
+python lstm_composite.py mnist/models/lstm_autoencoder_20150911163609.pbtxt bouncing_mnist.pbtxt runandshow 128
+```
+you will then see two frames animating images.
+The first one will show an original sequence of images and the second will show you 
+a a sequence made from decoded images, from the autoencoder, followed by predicted future images.
